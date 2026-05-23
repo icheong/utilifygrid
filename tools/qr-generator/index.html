@@ -98,7 +98,7 @@
 
               <div class="form-group">
                 <label for="qr-size" class="form-label">Size (Pixels)</label>
-                <select id="qr-size" class="form-select" onchange="generateQR()">
+                <select id="qr-size" class="form-select" onchange="forceRebuild()">
                   <option value="128">128 x 128 px</option>
                   <option value="256" selected>256 x 256 px</option>
                   <option value="384">384 x 384 px</option>
@@ -109,11 +109,11 @@
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                 <div class="form-group">
                   <label for="qr-color-dark" class="form-label">QR Color (Dark)</label>
-                  <input type="color" id="qr-color-dark" class="form-input" style="padding: 0.2rem 0.5rem; height: 40px;" value="#000000" onchange="generateQR()">
+                  <input type="color" id="qr-color-dark" class="form-input" style="padding: 0.2rem 0.5rem; height: 40px;" value="#000000" onchange="forceRebuild()">
                 </div>
                 <div class="form-group">
                   <label for="qr-color-light" class="form-label">Background Color</label>
-                  <input type="color" id="qr-color-light" class="form-input" style="padding: 0.2rem 0.5rem; height: 40px;" value="#ffffff" onchange="generateQR()">
+                  <input type="color" id="qr-color-light" class="form-input" style="padding: 0.2rem 0.5rem; height: 40px;" value="#ffffff" onchange="forceRebuild()">
                 </div>
               </div>
             </div>
@@ -123,7 +123,7 @@
               <div class="panel-title" style="margin-bottom: 0.5rem; align-self: flex-start;">QR Preview</div>
               
               <div class="qr-preview-box" id="qr-preview-container">
-                <!-- QR Code rendered here -->
+                <span style="color: #aaa; font-size: 0.85rem;">Input text content to render preview...</span>
               </div>
               
               <div style="display: flex; gap: 0.5rem; width: 100%;">
@@ -186,8 +186,8 @@
 
   </div>
 
-  <!-- Import Lightweight Client-side QR Library -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nOMdBqccyvScCgOMdU17NiJI14MctglSgQrGoXB70ipspGD9txgRJyYGPAKR17C5kfBClgMHYUXQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- QR library: no integrity attribute to avoid SRI blocking -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="../../js/app.js"></script>
   <script>
     const qrContainer = document.getElementById('qr-preview-container');
@@ -196,20 +196,28 @@
     const colorDarkInput = document.getElementById('qr-color-dark');
     const colorLightInput = document.getElementById('qr-color-light');
     const alertBox = 'qr-alert-box';
+
     let qrcodeInstance = null;
+    let currentSize = 256;
 
     window.addEventListener('load', () => {
-      // Set default content and run first generation
       qrTextInput.value = "https://utilifyhub.com";
       generateQR();
     });
 
+    // Called when size or color changes — must fully rebuild the instance
+    function forceRebuild() {
+      qrcodeInstance = null;
+      generateQR();
+    }
+
     function generateQR() {
       clearAlert(alertBox);
       const textVal = qrTextInput.value;
-      
+
       if (!textVal) {
-        qrContainer.innerHTML = '<span style="color: var(--text-secondary); font-size: 0.85rem;">Input text content to render preview...</span>';
+        qrContainer.innerHTML = '<span style="color: #aaa; font-size: 0.85rem;">Input text content to render preview...</span>';
+        qrcodeInstance = null;
         return;
       }
 
@@ -217,51 +225,51 @@
       const colorDark = colorDarkInput.value;
       const colorLight = colorLightInput.value;
 
-      qrContainer.innerHTML = '';
-      
       try {
-        qrcodeInstance = new QRCode(qrContainer, {
-          text: textVal,
-          width: size,
-          height: size,
-          colorDark: colorDark,
-          colorLight: colorLight,
-          correctLevel: QRCode.CorrectLevel.H
-        });
+        if (qrcodeInstance && size === currentSize) {
+          // Only text changed — use makeCode() to avoid rebuilding DOM
+          qrcodeInstance.makeCode(textVal);
+        } else {
+          // Size or color changed, or first render — full rebuild
+          qrContainer.innerHTML = '';
+          qrcodeInstance = new QRCode(qrContainer, {
+            text: textVal,
+            width: size,
+            height: size,
+            colorDark: colorDark,
+            colorLight: colorLight,
+            correctLevel: QRCode.CorrectLevel.H
+          });
+          currentSize = size;
+        }
       } catch (err) {
-        showAlert(alertBox, 'Error compiling barcode pattern. Ensure text size fits boundaries.', 'danger');
+        qrcodeInstance = null;
+        showAlert(alertBox, 'Error generating QR code. Try shortening your input text.', 'danger');
       }
     }
 
     function downloadQR() {
-      // Find the image element inside the QR container
-      const img = qrContainer.querySelector('img');
       const canvas = qrContainer.querySelector('canvas');
-      
-      if (!img && !canvas) {
+      const img = qrContainer.querySelector('img');
+
+      if (!canvas && !img) {
         showAlert(alertBox, 'Please input QR content before attempting download.', 'warning');
         return;
       }
 
       try {
-        let downloadUrl = '';
-        if (img && img.src) {
-          downloadUrl = img.src;
-        } else if (canvas) {
-          downloadUrl = canvas.toDataURL("image/png");
-        }
+        // Prefer canvas as it always has current pixel data
+        const downloadUrl = canvas
+          ? canvas.toDataURL("image/png")
+          : img.src;
 
-        if (downloadUrl) {
-          const downloadLink = document.createElement("a");
-          downloadLink.href = downloadUrl;
-          downloadLink.download = "utilifyhub-qrcode.png";
-          document.body.appendChild(downloadLink);
-          downloadLink.click();
-          document.body.removeChild(downloadLink);
-          showAlert(alertBox, 'QR Code PNG successfully downloaded!', 'success');
-        } else {
-          showAlert(alertBox, 'Failed to extract download image. Please try again.', 'danger');
-        }
+        const a = document.createElement("a");
+        a.href = downloadUrl;
+        a.download = "utilifyhub-qrcode.png";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        showAlert(alertBox, 'QR Code PNG successfully downloaded!', 'success');
       } catch (err) {
         showAlert(alertBox, 'Export Error: ' + err.message, 'danger');
       }
