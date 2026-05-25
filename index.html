@@ -6,8 +6,8 @@
   
   <!-- Primary SEO Meta Tags -->
   <title>UtilifyHub | Free Developer, Calculator & Text Utilities Online</title>
-  <meta name="description" content="Discover a curated collection of free, high-performance web utility tools. Format JSON, generate QR codes, calculate compound interest, decode Base64, and more instantly in your browser.">
-  <meta name="keywords" content="utility tools, json formatter, qr code generator, word counter, compound interest calculator, base64 encoder, case converter, free online tools">
+  <meta name="description" content="Discover a curated collection of free, high-performance web utility tools. Format JSON, generate QR codes, calculate compound interest, decode Base64, convert units, generate UUIDs, and more instantly in your browser.">
+  <meta name="keywords" content="utility tools, json formatter, qr code generator, word counter, compound interest calculator, base64 encoder, case converter, unit converter, uuid generator, color converter, hash generator, loan calculator, lorem ipsum, free online tools">
   
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
@@ -33,7 +33,7 @@
       </div>
       
       <div class="header-search">
-        <input type="text" id="search-tools" placeholder="Search across 10+ free tools...">
+        <input type="text" id="search-tools" placeholder="Search across 16+ free tools...">
       </div>
       
       <nav class="header-actions">
@@ -80,7 +80,9 @@
         <!-- Dynamic Tools Directory -->
         <section class="tools-grid" id="tools-grid-container">
           
-          <!-- Tool Card 1: JSON Formatter -->
+          <!-- ── ORIGINAL 10 TOOLS ── -->
+
+          <!-- Tool: JSON Formatter -->
           <a href="./tools/json-formatter/index.html" class="tool-card" data-category="dev" data-tags="json formatter validator beautify minify developer parser" id="tool-json-formatter">
             <span class="tool-badge">Highly Popular</span>
             <div class="tool-icon">{}</div>
@@ -90,7 +92,7 @@
             </div>
           </a>
 
-          <!-- Tool Card 2: Base64 Converter -->
+          <!-- Tool: Base64 Converter -->
           <a href="./tools/base64-converter/index.html" class="tool-card" data-category="dev" data-tags="base64 encoder decoder binary string converter raw developer" id="tool-base64-converter">
             <div class="tool-icon">64</div>
             <div class="tool-info">
@@ -99,7 +101,7 @@
             </div>
           </a>
 
-          <!-- Tool Card 3: Word Counter -->
+          <!-- Tool: Word Counter -->
           <a href="./tools/word-counter/index.html" class="tool-card" data-category="text" data-tags="word counter character read time paragraphs letters length text editor writing density seo" id="tool-word-counter">
             <div class="tool-icon">📝</div>
             <div class="tool-info">
@@ -108,7 +110,7 @@
             </div>
           </a>
 
-          <!-- Tool Card 4: Percentage Calculator -->
+          <!-- Tool: Percentage Calculator -->
           <a href="./tools/percentage-calculator/index.html" class="tool-card" data-category="calc" data-tags="percentage calculator math discount increase fraction decrease ratios finance" id="tool-percentage-calculator">
             <div class="tool-icon">%</div>
             <div class="tool-info">
@@ -117,7 +119,7 @@
             </div>
           </a>
 
-          <!-- Tool Card 5: QR Generator -->
+          <!-- Tool: QR Generator -->
           <a href="./tools/qr-generator/index.html" class="tool-card" data-category="text" data-tags="qr code generator scanner canvas mobile download links barcodes svg designer text assets" id="tool-qr-generator">
             <div class="tool-icon">📱</div>
             <div class="tool-info">
@@ -126,7 +128,7 @@
             </div>
           </a>
 
-          <!-- Tool Card 6: Compound Interest -->
+          <!-- Tool: Compound Interest -->
           <a href="./tools/compound-interest/index.html" class="tool-card" data-category="calc" data-tags="compound interest calculator simple saving finance mortgage return investments yield money stocks" id="tool-compound-interest">
             <span class="tool-badge">High Value</span>
             <div class="tool-icon">💰</div>
@@ -136,7 +138,7 @@
             </div>
           </a>
 
-          <!-- Tool Card 7: Case Converter -->
+          <!-- Tool: Case Converter -->
           <a href="./tools/case-converter/index.html" class="tool-card" data-category="text" data-tags="case converter uppercase lowercase title sentence camelcase snakecase string text formatter writing" id="tool-case-converter">
             <div class="tool-icon">aA</div>
             <div class="tool-info">
@@ -145,7 +147,7 @@
             </div>
           </a>
 
-          <!-- Tool Card 8: Aspect Ratio -->
+          <!-- Tool: Aspect Ratio -->
           <a href="./tools/aspect-ratio/index.html" class="tool-card" data-category="calc" data-tags="aspect ratio calculator designer screens size width height scaler responsive css pixels scaling" id="tool-aspect-ratio">
             <div class="tool-icon">📐</div>
             <div class="tool-info">
@@ -154,7 +156,7 @@
             </div>
           </a>
 
-          <!-- Tool Card 9: Epoch Converter -->
+          <!-- Tool: Epoch Converter -->
           <a href="./tools/epoch-converter/index.html" class="tool-card" data-category="dev" data-tags="epoch converter unix timestamp date time convert developer ticks milliseconds clock coding" id="tool-epoch-converter">
             <div class="tool-icon">🕒</div>
             <div class="tool-info">
@@ -163,12 +165,74 @@
             </div>
           </a>
 
-          <!-- Tool Card 10: Password Generator -->
+          <!-- Tool: Password Generator -->
           <a href="./tools/password-generator/index.html" class="tool-card" data-category="dev" data-tags="password generator strength entropy random keys security hashes secure developer cryptography" id="tool-password-generator">
             <div class="tool-icon">🔒</div>
             <div class="tool-info">
               <h3>Password Generator</h3>
               <p>Generate highly randomized, secure string credentials with entropy ratings and specific char overrides.</p>
+            </div>
+          </a>
+
+          <!-- ── NEW 6 TOOLS ── -->
+
+          <!-- Tool: Color Converter -->
+          <a href="./tools/color-converter/index.html" class="tool-card" data-category="dev" data-tags="color converter hex rgb hsl hsb hsv color picker palette complementary designer css color" id="tool-color-converter">
+            <span class="tool-badge">New</span>
+            <div class="tool-icon">🎨</div>
+            <div class="tool-info">
+              <h3>Color Converter & Palette</h3>
+              <p>Convert between HEX, RGB, HSL, and HSB. Live color preview swatch and complementary palette generator.</p>
+            </div>
+          </a>
+
+          <!-- Tool: Hash Generator -->
+          <a href="./tools/hash-generator/index.html" class="tool-card" data-category="dev" data-tags="hash generator md5 sha sha256 sha512 sha1 checksum crypto digest security developer" id="tool-hash-generator">
+            <span class="tool-badge">New</span>
+            <div class="tool-icon">🔐</div>
+            <div class="tool-info">
+              <h3>Hash Generator</h3>
+              <p>Generate MD5, SHA-1, SHA-256, and SHA-512 cryptographic hashes from any input string using the Web Crypto API.</p>
+            </div>
+          </a>
+
+          <!-- Tool: Unit Converter -->
+          <a href="./tools/unit-converter/index.html" class="tool-card" data-category="calc" data-tags="unit converter length weight temperature volume data storage km miles kg lbs celsius fahrenheit litres gallons" id="tool-unit-converter">
+            <span class="tool-badge">New</span>
+            <div class="tool-icon">📏</div>
+            <div class="tool-info">
+              <h3>Unit Converter</h3>
+              <p>Convert length, weight, temperature, volume, and data storage across all major metric and imperial units. Type in any field.</p>
+            </div>
+          </a>
+
+          <!-- Tool: UUID Generator -->
+          <a href="./tools/uuid-generator/index.html" class="tool-card" data-category="dev" data-tags="uuid generator ulid unique identifier guid bulk random id developer database primary key" id="tool-uuid-generator">
+            <span class="tool-badge">New</span>
+            <div class="tool-icon">🆔</div>
+            <div class="tool-info">
+              <h3>UUID / ULID Generator</h3>
+              <p>Generate cryptographically random UUID v4 identifiers and ULIDs in bulk. One-click copy. All client-side.</p>
+            </div>
+          </a>
+
+          <!-- Tool: Lorem Ipsum -->
+          <a href="./tools/lorem-ipsum/index.html" class="tool-card" data-category="text" data-tags="lorem ipsum generator placeholder text dummy text paragraphs words sentences design mockup layout" id="tool-lorem-ipsum">
+            <span class="tool-badge">New</span>
+            <div class="tool-icon">✍️</div>
+            <div class="tool-info">
+              <h3>Lorem Ipsum Generator</h3>
+              <p>Generate classic or randomised placeholder text by paragraphs, words, or sentences. Optional HTML wrapping.</p>
+            </div>
+          </a>
+
+          <!-- Tool: Loan Calculator -->
+          <a href="./tools/loan-calculator/index.html" class="tool-card" data-category="calc" data-tags="loan calculator mortgage repayment amortisation schedule home loan car loan personal loan interest finance" id="tool-loan-calculator">
+            <span class="tool-badge">New</span>
+            <div class="tool-icon">🏠</div>
+            <div class="tool-info">
+              <h3>Loan & Mortgage Calculator</h3>
+              <p>Calculate monthly repayments, total interest, and view a full amortisation schedule for any loan type.</p>
             </div>
           </a>
 
