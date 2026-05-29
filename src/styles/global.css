@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+/*
+  Tailwind v4 — CSS-first configuration.
+  All theme tokens defined here replace tailwind.config.mjs.
+*/
+
+@theme {
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-display: 'Sora', system-ui, sans-serif;
+  --font-mono: 'Fira Code', 'JetBrains Mono', monospace;
+
+  --color-brand-blue:        #1D4ED8;
+  --color-brand-blue-dark:   #1E3A8A;
+  --color-brand-blue-light:  #DBEAFE;
+  --color-brand-amber:       #F59E0B;
+  --color-brand-amber-dark:  #D97706;
+  --color-brand-orange:      #EA580C;
+}
