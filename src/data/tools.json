@@ -3,7 +3,13 @@
     "slug": "bmi-calculator",
     "name": "BMI Calculator",
     "category": "health",
-    "tags": ["bmi", "health", "fitness", "weight", "body mass"],
+    "tags": [
+      "bmi",
+      "health",
+      "fitness",
+      "weight",
+      "body mass"
+    ],
     "description": "Calculate your Body Mass Index instantly using metric or imperial units. Find out your BMI category and what it means for your health.",
     "shortDescription": "Calculate Body Mass Index in metric or imperial.",
     "icon": "⚖️",
@@ -14,7 +20,13 @@
     "slug": "hex-to-rgb",
     "name": "HEX to RGB Converter",
     "category": "converters",
-    "tags": ["hex", "rgb", "color", "css", "design"],
+    "tags": [
+      "hex",
+      "rgb",
+      "color",
+      "css",
+      "design"
+    ],
     "description": "Convert HEX colour codes to RGB values instantly. Essential for web designers and developers working with CSS colour values.",
     "shortDescription": "Convert HEX colour codes to RGB and CSS values.",
     "icon": "🎨",
@@ -25,7 +37,15 @@
     "slug": "percentage-calculator",
     "name": "Percentage Calculator",
     "category": "calculators",
-    "tags": ["percentage", "percent", "math", "calculator", "increase", "decrease", "discount"],
+    "tags": [
+      "percentage",
+      "percent",
+      "math",
+      "calculator",
+      "increase",
+      "decrease",
+      "discount"
+    ],
     "description": "Calculate percentages instantly — find what percent one number is of another, calculate percentage increase or decrease, or work out a value from a percentage.",
     "shortDescription": "Find percentages, increases, decreases and discounts.",
     "icon": "📊",
@@ -36,7 +56,12 @@
     "slug": "word-counter",
     "name": "Word Counter",
     "category": "web-tools",
-    "tags": ["word count", "character count", "text", "writing"],
+    "tags": [
+      "word count",
+      "character count",
+      "text",
+      "writing"
+    ],
     "description": "Count words, characters, sentences and paragraphs in your text. Useful for essays, social media posts, SEO content and more.",
     "shortDescription": "Count words, characters and sentences in text.",
     "icon": "📝",
@@ -47,7 +72,19 @@
     "slug": "jwt-debugger",
     "name": "JWT Debugger",
     "category": "web-tools",
-    "tags": ["jwt", "json web token", "decode", "token", "authentication", "auth", "bearer", "header", "payload", "signature", "developer"],
+    "tags": [
+      "jwt",
+      "json web token",
+      "decode",
+      "token",
+      "authentication",
+      "auth",
+      "bearer",
+      "header",
+      "payload",
+      "signature",
+      "developer"
+    ],
     "description": "Decode and inspect JSON Web Tokens instantly in your browser. View the header, payload, and signature of any JWT — fully client-side, your tokens never leave your device.",
     "shortDescription": "Decode and inspect JWT headers, payloads and signatures.",
     "icon": "🔑",
@@ -58,11 +95,81 @@
     "slug": "json-to-typescript",
     "name": "JSON to TypeScript Generator",
     "category": "web-tools",
-    "tags": ["json", "typescript", "zod", "interface", "schema", "developer", "type", "validation", "javascript"],
+    "tags": [
+      "json",
+      "typescript",
+      "zod",
+      "interface",
+      "schema",
+      "developer",
+      "type",
+      "validation",
+      "javascript"
+    ],
     "description": "Paste any JSON payload and instantly generate strongly-typed TypeScript interfaces or Zod validation schemas. Supports nested objects, arrays, optional fields, and union types.",
     "shortDescription": "Generate TypeScript interfaces or Zod schemas from JSON.",
     "icon": "🔷",
     "dateAdded": "2025-05-29",
+    "featured": true
+  },
+  {
+    "slug": "crontab-visualizer",
+    "name": "Crontab Expression Visualizer",
+    "category": "web-tools",
+    "tags": [
+      "cron",
+      "crontab",
+      "schedule",
+      "visualizer",
+      "generator",
+      "time",
+      "developer",
+      "devops"
+    ],
+    "description": "Easily build and visualize cron expressions with a friendly UI. Use sliders and toggles to generate the exact cron syntax and get a human-readable explanation of when your scheduled tasks will run.",
+    "shortDescription": "Visually build cron expressions and get human-readable explanations.",
+    "icon": "⏱️",
+    "dateAdded": "2026-05-29",
+    "featured": true
+  },
+  {
+    "slug": "sql-to-nosql",
+    "name": "SQL to NoSQL Converter",
+    "category": "web-tools",
+    "tags": [
+      "sql",
+      "nosql",
+      "mongodb",
+      "query",
+      "converter",
+      "database",
+      "developer"
+    ],
+    "description": "Translate basic SQL queries (SELECT, WHERE, JOIN) into MongoDB aggregation pipelines instantly. A great learning tool for developers transitioning from relational databases to document stores.",
+    "shortDescription": "Convert SQL queries to MongoDB aggregation pipelines.",
+    "icon": "🗄️",
+    "dateAdded": "2026-05-29",
+    "featured": true
+  },
+  {
+    "slug": "freelance-rate-calculator",
+    "name": "Freelance Rate Calculator",
+    "category": "estimators",
+    "tags": [
+      "freelance",
+      "contractor",
+      "rate",
+      "calculator",
+      "hourly",
+      "daily",
+      "business",
+      "finance",
+      "pricing"
+    ],
+    "description": "Calculate your required hourly or daily billing rate as a freelancer. Input your target annual take-home pay, expected business expenses, tax brackets, and unbillable overhead time to find out exactly what you need to charge.",
+    "shortDescription": "Calculate your required freelance hourly or daily billing rate.",
+    "icon": "💸",
+    "dateAdded": "2026-05-29",
     "featured": true
   }
 ]
