@@ -1,0 +1,357 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import tools from '../../data/tools.json';
+
+const tool = tools.find(t => t.slug === 'crontab-visualizer')!;
+---
+
+<ToolLayout tool={tool}>
+
+  <!-- ═══ THE TOOL ═══ -->
+  <div slot="tool">
+    <div style="background:#0F172A; border-radius:1rem; padding:2rem; text-align:center; color:white; margin-bottom:1.5rem; box-shadow:0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);">
+      
+      <div style="display:flex; justify-content:center; gap:0.5rem; margin-bottom:1.5rem; flex-wrap:wrap;" id="cron-display">
+        <!-- We will generate 5 inputs here for the 5 parts -->
+        <div class="cron-part">
+          <input type="text" id="cron-min" value="*" style="background:rgba(255,255,255,0.1); border:2px solid rgba(255,255,255,0.2); border-radius:0.5rem; color:white; font-size:2rem; font-weight:700; width:4rem; text-align:center; padding:0.5rem; transition:border-color 0.2s;" />
+          <div style="font-size:0.75rem; color:#94A3B8; margin-top:0.5rem; text-transform:uppercase; letter-spacing:0.05em;">Minute</div>
+        </div>
+        <div class="cron-part">
+          <input type="text" id="cron-hour" value="*" style="background:rgba(255,255,255,0.1); border:2px solid rgba(255,255,255,0.2); border-radius:0.5rem; color:white; font-size:2rem; font-weight:700; width:4rem; text-align:center; padding:0.5rem; transition:border-color 0.2s;" />
+          <div style="font-size:0.75rem; color:#94A3B8; margin-top:0.5rem; text-transform:uppercase; letter-spacing:0.05em;">Hour</div>
+        </div>
+        <div class="cron-part">
+          <input type="text" id="cron-day" value="*" style="background:rgba(255,255,255,0.1); border:2px solid rgba(255,255,255,0.2); border-radius:0.5rem; color:white; font-size:2rem; font-weight:700; width:4rem; text-align:center; padding:0.5rem; transition:border-color 0.2s;" />
+          <div style="font-size:0.75rem; color:#94A3B8; margin-top:0.5rem; text-transform:uppercase; letter-spacing:0.05em;">Day</div>
+        </div>
+        <div class="cron-part">
+          <input type="text" id="cron-month" value="*" style="background:rgba(255,255,255,0.1); border:2px solid rgba(255,255,255,0.2); border-radius:0.5rem; color:white; font-size:2rem; font-weight:700; width:4rem; text-align:center; padding:0.5rem; transition:border-color 0.2s;" />
+          <div style="font-size:0.75rem; color:#94A3B8; margin-top:0.5rem; text-transform:uppercase; letter-spacing:0.05em;">Month</div>
+        </div>
+        <div class="cron-part">
+          <input type="text" id="cron-weekday" value="*" style="background:rgba(255,255,255,0.1); border:2px solid rgba(255,255,255,0.2); border-radius:0.5rem; color:white; font-size:2rem; font-weight:700; width:4rem; text-align:center; padding:0.5rem; transition:border-color 0.2s;" />
+          <div style="font-size:0.75rem; color:#94A3B8; margin-top:0.5rem; text-transform:uppercase; letter-spacing:0.05em;">Weekday</div>
+        </div>
+      </div>
+
+      <div id="human-readable" style="font-size:1.25rem; font-weight:600; color:#38BDF8; font-family:'Sora',sans-serif; min-height:2rem; text-wrap: balance;">
+        At every minute
+      </div>
+      <div id="cron-error" style="color:#F87171; font-size:0.875rem; margin-top:0.5rem; display:none;">Invalid cron expression</div>
+    </div>
+
+    <!-- UI Controls -->
+    <div style="display:grid; grid-template-columns:1fr; gap:1.25rem;" id="cron-controls">
+      
+      <!-- MINUTE CONTROLS -->
+      <div class="control-card" style="background:#fff; border:1px solid #E2E8F0; border-radius:1rem; padding:1.25rem;">
+        <h3 style="margin-top:0; margin-bottom:1rem; font-family:'Sora',sans-serif; font-size:1rem; color:#0F172A; display:flex; align-items:center; gap:0.5rem;">
+          <span style="background:#DBEAFE; color:#1D4ED8; padding:0.25rem 0.5rem; border-radius:0.25rem; font-size:0.75rem;">1</span> Minute
+        </h3>
+        
+        <div style="display:flex; flex-direction:column; gap:0.75rem;">
+          <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+            <input type="radio" name="mode-min" value="every" checked style="accent-color:#1D4ED8; width:1.1rem; height:1.1rem;">
+            <span style="font-size:0.9rem; color:#334155;">Every minute <code style="background:#F1F5F9; padding:0.1rem 0.3rem; border-radius:0.25rem;">*</code></span>
+          </label>
+          
+          <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+            <input type="radio" name="mode-min" value="step" style="accent-color:#1D4ED8; width:1.1rem; height:1.1rem;">
+            <span style="font-size:0.9rem; color:#334155;">Every</span>
+            <input type="range" id="slider-min-step" min="2" max="59" value="5" disabled style="flex:1; accent-color:#1D4ED8;">
+            <span id="val-min-step" style="font-size:0.9rem; font-weight:600; width:2rem; text-align:right; color:#64748B;">5</span>
+            <span style="font-size:0.9rem; color:#334155;">minutes</span>
+          </label>
+
+          <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+            <input type="radio" name="mode-min" value="specific" style="accent-color:#1D4ED8; width:1.1rem; height:1.1rem;">
+            <span style="font-size:0.9rem; color:#334155;">Specific minute</span>
+            <input type="range" id="slider-min-spec" min="0" max="59" value="0" disabled style="flex:1; accent-color:#1D4ED8;">
+            <span id="val-min-spec" style="font-size:0.9rem; font-weight:600; width:2rem; text-align:right; color:#64748B;">0</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- HOUR CONTROLS -->
+      <div class="control-card" style="background:#fff; border:1px solid #E2E8F0; border-radius:1rem; padding:1.25rem;">
+        <h3 style="margin-top:0; margin-bottom:1rem; font-family:'Sora',sans-serif; font-size:1rem; color:#0F172A; display:flex; align-items:center; gap:0.5rem;">
+          <span style="background:#FCE7F3; color:#BE185D; padding:0.25rem 0.5rem; border-radius:0.25rem; font-size:0.75rem;">2</span> Hour
+        </h3>
+        
+        <div style="display:flex; flex-direction:column; gap:0.75rem;">
+          <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+            <input type="radio" name="mode-hour" value="every" checked style="accent-color:#BE185D; width:1.1rem; height:1.1rem;">
+            <span style="font-size:0.9rem; color:#334155;">Every hour <code style="background:#F1F5F9; padding:0.1rem 0.3rem; border-radius:0.25rem;">*</code></span>
+          </label>
+          
+          <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+            <input type="radio" name="mode-hour" value="step" style="accent-color:#BE185D; width:1.1rem; height:1.1rem;">
+            <span style="font-size:0.9rem; color:#334155;">Every</span>
+            <input type="range" id="slider-hour-step" min="2" max="23" value="2" disabled style="flex:1; accent-color:#BE185D;">
+            <span id="val-hour-step" style="font-size:0.9rem; font-weight:600; width:2rem; text-align:right; color:#64748B;">2</span>
+            <span style="font-size:0.9rem; color:#334155;">hours</span>
+          </label>
+
+          <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+            <input type="radio" name="mode-hour" value="specific" style="accent-color:#BE185D; width:1.1rem; height:1.1rem;">
+            <span style="font-size:0.9rem; color:#334155;">Specific hour</span>
+            <input type="range" id="slider-hour-spec" min="0" max="23" value="12" disabled style="flex:1; accent-color:#BE185D;">
+            <span id="val-hour-spec" style="font-size:0.9rem; font-weight:600; width:2rem; text-align:right; color:#64748B;">12</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- DAY CONTROLS -->
+      <div class="control-card" style="background:#fff; border:1px solid #E2E8F0; border-radius:1rem; padding:1.25rem;">
+        <h3 style="margin-top:0; margin-bottom:1rem; font-family:'Sora',sans-serif; font-size:1rem; color:#0F172A; display:flex; align-items:center; gap:0.5rem;">
+          <span style="background:#FEF3C7; color:#B45309; padding:0.25rem 0.5rem; border-radius:0.25rem; font-size:0.75rem;">3</span> Day of Month
+        </h3>
+        
+        <div style="display:flex; flex-direction:column; gap:0.75rem;">
+          <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+            <input type="radio" name="mode-day" value="every" checked style="accent-color:#B45309; width:1.1rem; height:1.1rem;">
+            <span style="font-size:0.9rem; color:#334155;">Every day <code style="background:#F1F5F9; padding:0.1rem 0.3rem; border-radius:0.25rem;">*</code></span>
+          </label>
+          
+          <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+            <input type="radio" name="mode-day" value="step" style="accent-color:#B45309; width:1.1rem; height:1.1rem;">
+            <span style="font-size:0.9rem; color:#334155;">Every</span>
+            <input type="range" id="slider-day-step" min="2" max="31" value="2" disabled style="flex:1; accent-color:#B45309;">
+            <span id="val-day-step" style="font-size:0.9rem; font-weight:600; width:2rem; text-align:right; color:#64748B;">2</span>
+            <span style="font-size:0.9rem; color:#334155;">days</span>
+          </label>
+
+          <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+            <input type="radio" name="mode-day" value="specific" style="accent-color:#B45309; width:1.1rem; height:1.1rem;">
+            <span style="font-size:0.9rem; color:#334155;">Specific day</span>
+            <input type="range" id="slider-day-spec" min="1" max="31" value="1" disabled style="flex:1; accent-color:#B45309;">
+            <span id="val-day-spec" style="font-size:0.9rem; font-weight:600; width:2rem; text-align:right; color:#64748B;">1</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- MONTH CONTROLS -->
+      <div class="control-card" style="background:#fff; border:1px solid #E2E8F0; border-radius:1rem; padding:1.25rem;">
+        <h3 style="margin-top:0; margin-bottom:1rem; font-family:'Sora',sans-serif; font-size:1rem; color:#0F172A; display:flex; align-items:center; gap:0.5rem;">
+          <span style="background:#DCFCE7; color:#15803D; padding:0.25rem 0.5rem; border-radius:0.25rem; font-size:0.75rem;">4</span> Month
+        </h3>
+        
+        <div style="display:flex; flex-direction:column; gap:0.75rem;">
+          <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+            <input type="radio" name="mode-month" value="every" checked style="accent-color:#15803D; width:1.1rem; height:1.1rem;">
+            <span style="font-size:0.9rem; color:#334155;">Every month <code style="background:#F1F5F9; padding:0.1rem 0.3rem; border-radius:0.25rem;">*</code></span>
+          </label>
+          
+          <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+            <input type="radio" name="mode-month" value="specific" style="accent-color:#15803D; width:1.1rem; height:1.1rem;">
+            <span style="font-size:0.9rem; color:#334155;">Specific month</span>
+            <input type="range" id="slider-month-spec" min="1" max="12" value="1" disabled style="flex:1; accent-color:#15803D;">
+            <span id="val-month-spec" style="font-size:0.9rem; font-weight:600; width:4rem; text-align:right; color:#64748B;">Jan (1)</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- WEEKDAY CONTROLS -->
+      <div class="control-card" style="background:#fff; border:1px solid #E2E8F0; border-radius:1rem; padding:1.25rem;">
+        <h3 style="margin-top:0; margin-bottom:1rem; font-family:'Sora',sans-serif; font-size:1rem; color:#0F172A; display:flex; align-items:center; gap:0.5rem;">
+          <span style="background:#F3E8FF; color:#7E22CE; padding:0.25rem 0.5rem; border-radius:0.25rem; font-size:0.75rem;">5</span> Day of Week
+        </h3>
+        
+        <div style="display:flex; flex-direction:column; gap:0.75rem;">
+          <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+            <input type="radio" name="mode-weekday" value="every" checked style="accent-color:#7E22CE; width:1.1rem; height:1.1rem;">
+            <span style="font-size:0.9rem; color:#334155;">Every day of week <code style="background:#F1F5F9; padding:0.1rem 0.3rem; border-radius:0.25rem;">*</code></span>
+          </label>
+          
+          <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+            <input type="radio" name="mode-weekday" value="specific" style="accent-color:#7E22CE; width:1.1rem; height:1.1rem;">
+            <span style="font-size:0.9rem; color:#334155;">Specific day</span>
+            <input type="range" id="slider-weekday-spec" min="0" max="6" value="1" disabled style="flex:1; accent-color:#7E22CE;">
+            <span id="val-weekday-spec" style="font-size:0.9rem; font-weight:600; width:4rem; text-align:right; color:#64748B;">Mon (1)</span>
+          </label>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ HOW TO USE ═══ -->
+  <div slot="how-to-use">
+    <h2 style="font-family:'Sora',sans-serif; font-size:1.2rem; font-weight:700; color:#0F172A; margin-bottom:0.75rem;">
+      How to use the Crontab Visualizer
+    </h2>
+    <p style="color:#475569; font-size:0.9rem; line-height:1.75; margin-bottom:0.75rem;">
+      A cron expression represents a schedule in the form of five text fields separated by spaces. The visualizer helps you build these expressions without memorizing the complex syntax.
+    </p>
+    <p style="color:#475569; font-size:0.9rem; line-height:1.75; margin-bottom:0.75rem;">
+      Toggle between "Every", "Step" (e.g., every 5 minutes), or "Specific" modes for each part of the schedule. Use the sliders to pick your desired values. As you change the settings, the exact crontab syntax at the top will update instantly.
+    </p>
+    <p style="color:#475569; font-size:0.9rem; line-height:1.75;">
+      You can also manually edit the text inputs at the top. The tool will parse your input in real-time and generate a plain English description of exactly when your task will run, instantly highlighting any syntax errors.
+    </p>
+  </div>
+
+  <!-- ═══ HOW IT WORKS ═══ -->
+  <div slot="how-it-works">
+    <h2 style="font-family:'Sora',sans-serif; font-size:1.2rem; font-weight:700; color:#0F172A; margin-bottom:0.75rem;">
+      Understanding Cron Syntax
+    </h2>
+    <p style="color:#475569; font-size:0.9rem; line-height:1.75; margin-bottom:1rem;">
+      Cron expressions are powerful strings used by Unix-like operating systems to schedule commands or scripts to run periodically. The standard format consists of five fields:
+    </p>
+    <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:0.75rem; padding:1.25rem; font-family:monospace; color:#334155; margin-bottom:1.5rem; overflow-x:auto;">
+      * * * * *<br>
+      | | | | |<br>
+      | | | | +----- Day of week (0 - 6) (Sunday=0)<br>
+      | | | +------- Month (1 - 12)<br>
+      | | +--------- Day of month (1 - 31)<br>
+      | +----------- Hour (0 - 23)<br>
+      +------------- Minute (0 - 59)
+    </div>
+    
+    <h3 style="font-family:'Sora',sans-serif; font-size:1rem; font-weight:600; color:#0F172A; margin-bottom:0.5rem;">Special Characters</h3>
+    <ul style="color:#475569; font-size:0.9rem; line-height:1.75; margin-bottom:0; padding-left:1.5rem;">
+      <li><strong>* (Asterisk):</strong> Means "every". E.g., * in the minute field means every minute.</li>
+      <li><strong>, (Comma):</strong> Used to specify multiple values. E.g., "1,5" means minute 1 and minute 5.</li>
+      <li><strong>- (Hyphen):</strong> Determines a range of values. E.g., "1-5" means minutes 1, 2, 3, 4, and 5.</li>
+      <li><strong>/ (Slash):</strong> Specifies increments or steps. E.g., "*/5" in the minute field means every 5 minutes.</li>
+    </ul>
+  </div>
+
+  <!-- ═══ FAQ ═══ -->
+  <div slot="faq">
+    <h2 style="font-family:'Sora',sans-serif; font-size:1.2rem; font-weight:700; color:#0F172A; margin-bottom:1.25rem;">
+      Frequently Asked Questions
+    </h2>
+    <div style="display:flex; flex-direction:column; gap:0.75rem;">
+
+      {[
+        {
+          q: 'Why does "Sunday" correspond to both 0 and 7?',
+          a: 'In many implementations of cron, Sunday can be represented as either 0 or 7. This provides flexibility and accommodates different standard conventions. However, 0 is generally the most universally accepted way to represent Sunday across all systems.',
+        },
+        {
+          q: 'Can I schedule a task to run every second?',
+          a: 'Standard cron implementations only allow a minimum resolution of one minute. If you need a script to run every few seconds, you typically use a different task runner, or run a continuous script (like a Node.js daemon or a shell script with a "sleep" loop) rather than relying on standard crontab.',
+        },
+        {
+          q: 'How do I run a task "At midnight"?',
+          a: 'Midnight is represented by the expression "0 0 * * *". This means the 0th minute of the 0th hour, on every day of the month, every month, and every day of the week.',
+        }
+      ].map(item => (
+        <div style="background:#fff; border:1.5px solid #E2E8F0; border-radius:0.875rem; padding:1.1rem 1.25rem;">
+          <h3 style="font-size:0.9rem; font-weight:600; color:#0F172A; margin:0 0 0.5rem;">{item.q}</h3>
+          <p style="font-size:0.875rem; color:#475569; line-height:1.7; margin:0;">{item.a}</p>
+        </div>
+      ))}
+      
+    </div>
+  </div>
+
+</ToolLayout>
+
+<script is:inline src="https://unpkg.com/cronstrue@2.47.0/dist/cronstrue.min.js"></script>
+<script>
+  const inputs = {
+    min: document.getElementById('cron-min') as HTMLInputElement,
+    hour: document.getElementById('cron-hour') as HTMLInputElement,
+    day: document.getElementById('cron-day') as HTMLInputElement,
+    month: document.getElementById('cron-month') as HTMLInputElement,
+    weekday: document.getElementById('cron-weekday') as HTMLInputElement,
+  };
+
+  const humanReadable = document.getElementById('human-readable')!;
+  const cronError = document.getElementById('cron-error')!;
+
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+  const setupControls = (part: 'min'|'hour'|'day'|'month'|'weekday') => {
+    const radios = document.querySelectorAll(`input[name="mode-${part}"]`) as NodeListOf<HTMLInputElement>;
+    const sliderStep = document.getElementById(`slider-${part}-step`) as HTMLInputElement | null;
+    const sliderSpec = document.getElementById(`slider-${part}-spec`) as HTMLInputElement | null;
+    const valStep = document.getElementById(`val-${part}-step`);
+    const valSpec = document.getElementById(`val-${part}-spec`);
+
+    const updateFromUI = () => {
+      const checkedRadio = document.querySelector(`input[name="mode-${part}"]:checked`) as HTMLInputElement | null;
+      if (!checkedRadio) return; // Happens if user manually typed something and all radios are unchecked
+      const mode = checkedRadio.value;
+      
+      if (sliderStep) sliderStep.disabled = mode !== 'step';
+      if (sliderSpec) sliderSpec.disabled = mode !== 'specific';
+
+      let cronVal = '*';
+      if (mode === 'step' && sliderStep) {
+        cronVal = `*/${sliderStep.value}`;
+        if (valStep) valStep.innerText = sliderStep.value;
+      } else if (mode === 'specific' && sliderSpec) {
+        cronVal = sliderSpec.value;
+        if (valSpec) {
+           if (part === 'weekday') {
+             valSpec.innerText = `${weekdays[parseInt(sliderSpec.value)]} (${sliderSpec.value})`;
+           } else if (part === 'month') {
+             valSpec.innerText = `${months[parseInt(sliderSpec.value) - 1]} (${sliderSpec.value})`;
+           } else {
+             valSpec.innerText = sliderSpec.value;
+           }
+        }
+      }
+
+      inputs[part].value = cronVal;
+      updateHumanReadable();
+    };
+
+    radios.forEach(r => r.addEventListener('change', updateFromUI));
+    if (sliderStep) sliderStep.addEventListener('input', updateFromUI);
+    if (sliderSpec) sliderSpec.addEventListener('input', updateFromUI);
+  };
+
+  setupControls('min');
+  setupControls('hour');
+  setupControls('day');
+  setupControls('month');
+  setupControls('weekday');
+
+  const updateHumanReadable = () => {
+    const expression = `${inputs.min.value} ${inputs.hour.value} ${inputs.day.value} ${inputs.month.value} ${inputs.weekday.value}`;
+    
+    try {
+      // @ts-ignore - cronstrue is loaded globally via CDN
+      const desc = window.cronstrue.toString(expression, { throwExceptionOnParseError: true });
+      humanReadable.innerText = desc;
+      cronError.style.display = 'none';
+      
+      // visual flair: reset border color
+      Object.values(inputs).forEach(input => input.style.borderColor = 'rgba(255,255,255,0.2)');
+    } catch (e) {
+      humanReadable.innerText = '—';
+      cronError.style.display = 'block';
+      cronError.innerText = (e as Error).toString();
+      
+      // highlight errored inputs (simplified, just all of them for now)
+      Object.values(inputs).forEach(input => input.style.borderColor = 'rgba(239, 68, 68, 0.5)');
+    }
+  };
+
+  // Allow manual editing of inputs
+  Object.values(inputs).forEach(input => {
+    input.addEventListener('input', () => {
+      const idPart = input.id.replace('cron-', '');
+      const radios = document.querySelectorAll(`input[name="mode-${idPart}"]`) as NodeListOf<HTMLInputElement>;
+      radios.forEach(r => r.checked = false);
+      
+      // Also disable sliders since no mode is selected
+      const sliderStep = document.getElementById(`slider-${idPart}-step`) as HTMLInputElement | null;
+      const sliderSpec = document.getElementById(`slider-${idPart}-spec`) as HTMLInputElement | null;
+      if (sliderStep) sliderStep.disabled = true;
+      if (sliderSpec) sliderSpec.disabled = true;
+
+      updateHumanReadable();
+    });
+  });
+
+  // Init wait a moment for cronstrue to load just in case (though is:inline usually blocks)
+  setTimeout(updateHumanReadable, 50);
+</script>
