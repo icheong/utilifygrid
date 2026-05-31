@@ -75,5 +75,27 @@
     "icon": "🔷",
     "dateAdded": "2025-05-29",
     "featured": true
+  },
+  {
+    "slug": "ev-novated-lease-calculator",
+    "name": "EV Novated Lease Calculator",
+    "category": "estimators",
+    "tags": ["novated lease", "ev", "electric vehicle", "fbt", "fringe benefits tax", "salary packaging", "australia", "take home pay", "car", "tax savings"],
+    "description": "Compare the true cost of salary packaging an electric vehicle via novated lease versus buying out-of-pocket. Uses Australian FBT exemption rules to calculate your real take-home pay difference.",
+    "shortDescription": "Compare EV novated lease vs cash purchase for Australians.",
+    "icon": "🚗",
+    "dateAdded": "2025-05-30",
+    "featured": true
+  },
+  {
+    "slug": "mortgage-calculator",
+    "name": "Mortgage Amortization Calculator",
+    "category": "calculators",
+    "tags": ["mortgage", "amortization", "home loan", "extra payments", "interest", "repayment", "loan", "calculator", "schedule", "principal"],
+    "description": "Calculate your mortgage repayments and see how extra payments slash your loan term and total interest. Interactive sliders update the amortization schedule and savings chart instantly.",
+    "shortDescription": "See how extra repayments reduce your mortgage term and interest.",
+    "icon": "🏠",
+    "dateAdded": "2025-05-30",
+    "featured": true
   }
 ]
